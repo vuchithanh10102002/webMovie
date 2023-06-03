@@ -1,0 +1,40 @@
+.searchingBox{
+    border: 1px solid black;
+    width: 260px;
+    border-radius: 14px;
+    height: auto;
+    background-color: darkgray;
+}
+
+.searchingBox div{
+    padding: 0;
+}
+
+.searchingBox div input.MuiInputBase-input  {
+    padding: 10px;
+}
+
+.slideShow{
+    position: relative;
+}
+
+.slideshow-buttons button svg path{
+    fill: white;
+}
+.slideshow-buttons button svg{
+    font-size: 30px;
+}
+.slideshow-buttons{
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.info_slide{
+    background-color: rgba(255, 255, 255, 0.6);
+    z-index: 10;
+    padding: 20px;
+    border-radius: 5px;
+}
