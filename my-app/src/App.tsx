@@ -8,6 +8,7 @@ import MyList from "./pages/MyList/MyList";
 import Languages from "./pages/Languages/Languages";
 import Layout from "./layout/Layout";
 import Login from "./pages/Login/LoginIndex";
+import Detail from "./pages/Detail/DetailIndex";
 
 const App: React.FC = () => {
   return (
@@ -22,6 +23,7 @@ const App: React.FC = () => {
             <Route path="/new-and-popular" element={<NewAndPopularIndex />} />
             <Route path="/my-list" element={<MyList />} />
             <Route path="/browse-by-languages" element={<Languages />} />
+            <Route path="/detail/:id" element={<Detail />} />
           </Route>
         </Routes>
       </Router>

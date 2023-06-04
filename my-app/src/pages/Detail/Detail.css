@@ -1,0 +1,27 @@
+.background-image {
+    background-size: cover;
+    background-position: center;
+    height: 650px;
+    margin-top: 90px;
+    opacity: 0.7;
+}
+.imgDetail{
+    width: 320px;
+    height: 460px;
+}
+
+.detailTag{
+    position: absolute;
+    top: 0;
+    padding: 70px 100px;
+    display: flex;
+}
+
+.infoDetailTag{
+    background-color: rgba(0, 0, 0, 0.5);
+    max-width: 1000px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 50px;
+}
