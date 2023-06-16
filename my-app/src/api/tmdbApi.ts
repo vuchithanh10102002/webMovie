@@ -1,4 +1,4 @@
-import axiosClient from "./apiClient";
+import axiosClient from "./publicClient";
 
 export const category = {
     movie: "moive",
