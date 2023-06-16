@@ -2,23 +2,20 @@ import React, { useEffect, useState } from 'react';
 import SlideShowIndex from '../../layout/SlideShow/SlideShowIndex'
 import './homepage.css';
 import { Film } from '../../Model/Film';
-import { getDetail, getAllPopular, getAllTopRated, getAllUpComing } from './Service';
-import DetailIndex from '../Detail/DetailIndex';
-import { PagePaging } from '../../Model/Paging';
+import { getAllPopular, getAllTopRated, getAllUpComing } from './Service';
 import { useNavigate } from 'react-router-dom';
 
 function HomePageIndex() {
   const [popular, setPopular] = useState<Array<Film>>([]);
   const [topRated, setTopRated] = useState<Array<Film>>([]);
   const [upComing, setUpComing] = useState<Array<Film>>([]);
-  const [data, setData] = useState<Film>(new Film());
   const navigate = useNavigate();
 
   useEffect(() => {
     const getPopular = async () => {
       try {
         const response: any = await getAllPopular();
-        const films = response.results;
+        const films = response?.results;
         setPopular(films);
 
       }
@@ -34,7 +31,7 @@ function HomePageIndex() {
     const getTopRated = async () => {
       try {
         const response: any = await getAllTopRated();
-        const films = response.results;
+        const films = response?.results;
         setTopRated(films);
 
       }
@@ -50,7 +47,7 @@ function HomePageIndex() {
     const getUpComing = async () => {
       try {
         const response: any = await getAllUpComing();
-        const films = response.results;
+        const films = response?.results;
         setUpComing(films);
 
       }

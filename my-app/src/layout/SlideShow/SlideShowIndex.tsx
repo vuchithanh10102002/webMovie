@@ -57,14 +57,14 @@ export default function SlideShow() {
                 className="bg_sl"
             >
                 {films.map((film) => (
-                    <SwiperSlide key={film.id}>
+                    <SwiperSlide key={film?.id}>
                         <div
                             className="swiper-slide"
-                            style={{ backgroundImage: `url("https://image.tmdb.org/t/p/w1280${film.backdrop_path}")` }}
+                            style={{ backgroundImage: `url("https://image.tmdb.org/t/p/w1280${film?.backdrop_path}")` }}
                         />
                         <div className="swiper-slide-caption info_slide">
-                            <h2>{film.title}</h2>
-                            <p className="overview">{film.overview}</p>
+                            <h2>{film?.title}</h2>
+                            <p className="overview">{film?.overview}</p>
                         </div>
                     </SwiperSlide>
 

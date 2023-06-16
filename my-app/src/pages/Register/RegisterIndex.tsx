@@ -16,11 +16,13 @@ import Button from "@mui/material/Button";
 import AlertTitle from "@mui/material/AlertTitle";
 
 
-function LoginIndex() {
+function RegisterIndex() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [repeatPassword, setRepeatPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [showRepeatPassword, setShowRepeatPassword] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const navigate = useNavigate();
 
@@ -35,11 +37,14 @@ function LoginIndex() {
     const handleClickShowPassword = () => {
         setShowPassword((showPassword) => !showPassword);
     };
+    const handleClickShowRepeatPassword = () => {
+        setShowRepeatPassword((showRepeatPassword) => !showRepeatPassword);
+    };
     return (
         <div
             style={{ backgroundImage: `url('https://assets.nflxext.com/ffe/siteui/vlv3/73334647-ad51-42a9-b07b-93298cc2a8e1/a13fedda-da19-4b61-8063-5f715391b742/VN-vi-20230605-popsignuptwoweeks-perspective_alpha_website_large.jpg')` }}
         >
-            <h1 style={{ margin: 0, padding: 20, color: 'red', cursor: 'pointer' }} onClick={() => navigate('/home')}>MyNetFlix</h1>
+            <h1 style={{ margin: 0, padding: 20, color:'red', cursor: 'pointer' }}  onClick={() => navigate('/home')}>MyNetFlix</h1>
             <Grid
                 container
                 columns={12}
@@ -49,10 +54,8 @@ function LoginIndex() {
                     <Box
                         sx={{
                             width: "auto",
-                            height: 400,
+                            height: 500,
                             backgroundColor: "white",
-
-
                             borderRadius: 3,
                             overflow: "hidden",
                             boxShadow:
@@ -65,7 +68,7 @@ function LoginIndex() {
                             width={350}
                             margin="0 30px"
                         >
-                            <h1 style={{ marginBottom: 50 }}>Login</h1>
+                            <h1 style={{ marginBottom: 50 }}>Register</h1>
                             <FormControl
                                 sx={{ m: 1, width: "100%", height: "50px" }}
                                 variant="standard"
@@ -79,7 +82,7 @@ function LoginIndex() {
                                             <PersonIcon />
                                         </InputAdornment>
                                     }
-                                    placeholder={"Tên đăng nhập"}
+                                    placeholder={"Username"}
                                 />
                             </FormControl>
                             <FormControl
@@ -107,7 +110,35 @@ function LoginIndex() {
                                             <LockIcon />
                                         </InputAdornment>
                                     }
-                                    placeholder={"Mật khẩu"}
+                                    placeholder={"Password"}
+                                />
+                            </FormControl>
+                            <FormControl
+                                sx={{ m: 1, width: "100%", height: "50px" }}
+                                variant="standard"
+                            >
+                                <Input
+                                    id="standard-adornment-password"
+                                    type={showRepeatPassword ? "text" : "password"}
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowRepeatPassword}
+                                            // onMouseDown={handleMouseDownPassword}
+                                            >
+                                                {showRepeatPassword ? <Visibility /> : <VisibilityOff />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                    onChange={(e) => setRepeatPassword(e.target.value)}
+                                    error={errorMessage !== ""}
+                                    startAdornment={
+                                        <InputAdornment position="start">
+                                            <LockIcon />
+                                        </InputAdornment>
+                                    }
+                                    placeholder={"Repeat Password"}
                                 />
                             </FormControl>
                             <div style={{ backgroundColor: "none", height: 20 }}>
@@ -115,12 +146,12 @@ function LoginIndex() {
                                     <p style={{ color: "red", marginTop: 0 }}>{errorMessage}</p>
                                 )}
                             </div>
-                            <Button type='submit'>Login</Button>
+                            <Button type='submit'>Register</Button>
                             <Stack
                                 direction="row"
                             >
-                                Don't have an account?
-                                <Link to="/register">Register here</Link>
+                                Have an account?
+                                <Link to="/login">Log in here</Link>
                             </Stack>
                         </Stack>
                     </Box>
@@ -129,4 +160,4 @@ function LoginIndex() {
         </div>
     )
 }
-export default LoginIndex
+export default RegisterIndex

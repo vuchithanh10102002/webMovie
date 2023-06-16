@@ -17,20 +17,8 @@ export const LIST_ROUTE_COMPONENT: ItemRouter[] = [
         path: '/home', title: 'Home'
     },
     {
-        path: '/series', title: 'Series'
-    },
-    {
-        path: '/films', title: 'Films'
-    },
-    {
-        path: '/new-and-popular', title: 'New & Popular'
-    },
-    {
         path: '/my-list', title: 'My List'
     },
-    {
-        path: '/browse-by-languages', title: 'Browse by Languages'
-    }
 ];
 
 function NavbarIndex() {
@@ -59,7 +47,7 @@ function NavbarIndex() {
         <div className={`navbar ${check ? 'active' : ''}`}>
             <div className='direct'>
                 <div>
-                    <h1>MyNetFlix</h1>
+                    <h1 style={{ cursor: 'pointer' }} onClick={() => navigate('/home')}>MyNetFlix</h1>
                 </div>
                 {LIST_ROUTE_COMPONENT.map((route, index) => (
                     <NavLink
@@ -87,7 +75,7 @@ function NavbarIndex() {
                     ) : (
                         <div className='loginTag'>
                             <div className='login' onClick={() => navigate('/login')}><p>Login</p></div>
-                            <div className='login'><p>Register</p></div>
+                            <div className='login' onClick={() => navigate('/register')}><p>Register</p></div>
                         </div>
                     )
                 )
