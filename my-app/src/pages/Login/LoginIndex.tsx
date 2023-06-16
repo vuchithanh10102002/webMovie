@@ -14,7 +14,10 @@ import PersonIcon from "@mui/icons-material/Person";
 import Grid from "@mui/material/Grid";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
-
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import userApi from '../../api/userApi';
+import { setUser } from '../../redux/userSlice';
 
 function LoginIndex() {
     const [username, setUsername] = useState("");
@@ -23,15 +26,33 @@ function LoginIndex() {
     const [showPassword, setShowPassword] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    const handleSubmit = () => {
+    const user = {
+        "username": username,
+        "password": password
+    }
+
+    
+    const handleSubmit = async (e: any) => {
         if (username === "" || password === "") {
             setErrorMessage("Nhập thiếu thông tin! Vui lòng nhập lại!");
         } else {
-            navigate('/home');
-            localStorage.setItem('token', '123456');
+            e.preventDefault();
+            const { response, error }: any = await userApi.signin(user);
+
+            if (response) {
+                dispatch(setUser(response));
+                navigate("/home");
+            }
+
+            if (error) {
+                console.log(error);
+            }
         }
     };
+
+    
     const handleClickShowPassword = () => {
         setShowPassword((showPassword) => !showPassword);
     };

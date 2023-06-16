@@ -3,7 +3,7 @@ import queryString from "query-string";
 import apiConfig from "./apiConfig";
 
 const axiosClient = axios.create({
-  baseURL: apiConfig.baseURL,
+  baseURL: "http://localhost:3000/v1/auth/",
   headers: {"Content-Type": "application/json"},
   paramsSerializer: {
     encode: (params) => queryString.stringify(params),

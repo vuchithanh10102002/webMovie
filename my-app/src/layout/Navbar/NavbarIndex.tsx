@@ -5,6 +5,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import './NavBar.css';
 import { IconButton } from '@mui/material';
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from 'react-redux';
 interface ItemRouter {
     path: string;
     children?: ItemRouter[];
@@ -34,7 +35,7 @@ export const LIST_ROUTE_COMPONENT: ItemRouter[] = [
 ];
 
 function NavbarIndex() {
-
+    const user = useSelector((state: any) => state.user);
     const [check, setCheck] = useState<boolean>(false);
     const [open, setOpen] = useState<boolean>(false);
     const navigate = useNavigate();
@@ -53,7 +54,6 @@ function NavbarIndex() {
             window.removeEventListener('scroll', handleScroll)
         }
     })
-    const token = localStorage.getItem('token');
     return (
         // <div className={`NavBar ${check ? 'active' :''}`}>
         <div className={`navbar ${check ? 'active' : ''}`}>
@@ -80,9 +80,9 @@ function NavbarIndex() {
 
             {open &&
                 (
-                    token ? (
+                    user ? (
                         <div className='loginTag'>
-                            <div className='login' onClick={() => { navigate('/login'); localStorage.removeItem('token') }}><p>Logout</p></div>
+                            <div className='login' onClick={() => { navigate('/login') }}><p>Logout</p></div>
                         </div>
                     ) : (
                         <div className='loginTag'>

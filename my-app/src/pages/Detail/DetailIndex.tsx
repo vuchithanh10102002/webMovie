@@ -8,16 +8,22 @@ import { IconButton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import StarIcon from '@mui/icons-material/Star';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import favoriteApi from '../../api/favoriteApi';
+import { addFavorite } from '../../redux/userSlice';
 
 const listIcon = [
   <StorageIcon sx={{ color: 'white' }} />,
-  <FavoriteIcon sx={{ color: 'white' }} />,
+  <FavoriteIcon sx={{ color: 'white' }}/>,
   <BookmarkIcon sx={{ color: 'white' }} />,
   <StarIcon sx={{ color: 'white' }} />
 ]
 function DetailIndex() {
   const { id } = useParams();
   const [film, setFilm] = useState<Film>(new Film());
+  const dispatch = useDispatch();
+  const user = useSelector((state: any) => state.user);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -37,6 +43,34 @@ function DetailIndex() {
 
     fetchData();
   }, [id]);
+
+  const handleClickFavorites = async () => {
+    if (!user) {
+      console.log("Please signin");
+    }
+
+    const body = {
+      user: user.user.user._id,
+      mediaId: film.id,
+      mediaTitle: film.original_title,
+      mediaType: "movie",
+      mediaPoster: film.poster_path,
+      mediaRate: film.vote_average
+    }
+    console.log(body)
+
+    const { response, error } : any = await favoriteApi.add(body);
+
+    if (error) {
+      console.log(error);
+    }
+
+    if(response) {
+      dispatch(addFavorite(response));
+
+    }
+  }
+
 
 
   const getTime = (time: number = 0) => {
@@ -66,7 +100,8 @@ function DetailIndex() {
             <h1>{film?.title}</h1>
             <div className='actions'>
               {listIcon.map(icon => (
-                <IconButton sx={{ backgroundColor: 'black', marginRight: 5 }}>
+                
+                <IconButton sx={{ backgroundColor: 'black', marginRight: 5 }} onClick={handleClickFavorites}>
                   {icon}
                 </IconButton>
               ))}

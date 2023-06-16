@@ -1,5 +1,5 @@
 import axios from "axios";
-import axiosClient from "../../api/apiClient";
+import axiosClient from "../../api/publicClient";
 import { PagePaging } from "../../Model/Paging";
 import { Film } from "../../Model/Film";
 
