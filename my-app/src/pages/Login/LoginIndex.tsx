@@ -32,21 +32,22 @@ function LoginIndex() {
         "username": username,
         "password": password
     }
-
     
     const handleSubmit = async (e: any) => {
         if (username === "" || password === "") {
             setErrorMessage("Nhập thiếu thông tin! Vui lòng nhập lại!");
+            
         } else {
             e.preventDefault();
             const { response, error }: any = await userApi.signin(user);
+            console.log(response);
+            
 
             if (response) {
                 dispatch(setUser(response));
                 navigate("/home");
-            }
-
-            if (error) {
+            } else {
+                setErrorMessage("Tên đăng nhập hoặc mật khẩu sai!")
                 console.log(error);
             }
         }
@@ -64,7 +65,7 @@ function LoginIndex() {
             <Grid
                 container
                 columns={12}
-                sx={{ display: "flex", justifyContent: "center", minHeight: "100vh", alignItems: "center" }}
+                sx={{ display: "flex", justifyContent: "center", minHeight: "100vh", position: "relative", top: 180 }}
             >
                 <form onSubmit={handleSubmit} >
                     <Box
@@ -72,8 +73,6 @@ function LoginIndex() {
                             width: "auto",
                             height: 400,
                             backgroundColor: "white",
-
-
                             borderRadius: 3,
                             overflow: "hidden",
                             boxShadow:

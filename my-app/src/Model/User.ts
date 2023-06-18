@@ -1,5 +1,8 @@
 export class User{
-    username: string = '';
-    password: string = '';
-    repeatPassword: string = '';
+    _id?: string;
+    username?: string;
+    password?: string;
+    confirmPassword?: string;
+    email?: string;
+    displayName?: string;
 }

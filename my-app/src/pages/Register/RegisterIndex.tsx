@@ -14,10 +14,15 @@ import PersonIcon from "@mui/icons-material/Person";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import AlertTitle from "@mui/material/AlertTitle";
+import { useDispatch } from 'react-redux';
+import userApi from '../../api/userApi';
+import { setUser } from '../../redux/userSlice';
+import AttachEmailIcon from '@mui/icons-material/AttachEmail';
 
 
 function RegisterIndex() {
     const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
@@ -25,30 +30,54 @@ function RegisterIndex() {
     const [showRepeatPassword, setShowRepeatPassword] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    const handleSubmit = () => {
+    const user = {
+        "username": username,
+        "password": password,
+
+        "email": email,
+    }
+
+    const handleSubmit = async (e: any) => {
         if (username === "" || password === "") {
             setErrorMessage("Nhập thiếu thông tin! Vui lòng nhập lại!");
+
         } else {
-            navigate('/home');
-            localStorage.setItem('token', '123456');
+            e.preventDefault();
+            const { response, error }: any = await userApi.signup(user);
+            console.log(response);
+
+
+            if (response) {
+                dispatch(setUser(response));
+                navigate("/home");
+            } else {
+                setErrorMessage("Tên đăng nhập hoặc mật khẩu sai!")
+                console.log(error);
+            }
         }
     };
+
     const handleClickShowPassword = () => {
         setShowPassword((showPassword) => !showPassword);
     };
     const handleClickShowRepeatPassword = () => {
         setShowRepeatPassword((showRepeatPassword) => !showRepeatPassword);
     };
+
+
+
+
     return (
         <div
             style={{ backgroundImage: `url('https://assets.nflxext.com/ffe/siteui/vlv3/73334647-ad51-42a9-b07b-93298cc2a8e1/a13fedda-da19-4b61-8063-5f715391b742/VN-vi-20230605-popsignuptwoweeks-perspective_alpha_website_large.jpg')` }}
         >
-            <h1 style={{ margin: 0, padding: 20, color:'red', cursor: 'pointer' }}  onClick={() => navigate('/home')}>MyNetFlix</h1>
+            <h1 style={{ margin: 0, padding: 20, color: 'red', cursor: 'pointer' }} onClick={() => navigate('/home')}>MyNetFlix</h1>
             <Grid
                 container
                 columns={12}
-                sx={{ display: "flex", justifyContent: "center", minHeight: "100vh", alignItems: "center" }}
+                sx={{ display: "flex", justifyContent: "center", minHeight: "100vh", position: "relative", top: 180 }}
             >
                 <form onSubmit={handleSubmit} >
                     <Box
@@ -113,7 +142,7 @@ function RegisterIndex() {
                                     placeholder={"Password"}
                                 />
                             </FormControl>
-                            <FormControl
+                            {/* <FormControl
                                 sx={{ m: 1, width: "100%", height: "50px" }}
                                 variant="standard"
                             >
@@ -139,6 +168,23 @@ function RegisterIndex() {
                                         </InputAdornment>
                                     }
                                     placeholder={"Repeat Password"}
+                                />
+                            </FormControl> */}
+                            <FormControl
+                                sx={{ m: 1, width: "100%", height: "50px" }}
+                                variant="standard"
+                            >
+                                <Input
+                                    id="standard-basic"
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    error={errorMessage !== ""}
+                                    startAdornment={
+                                        <InputAdornment position="start">
+                                            <AttachEmailIcon />
+                                        </InputAdornment>
+                                    }
+                                    type='email'
+                                    placeholder={"Email"}
                                 />
                             </FormControl>
                             <div style={{ backgroundColor: "none", height: 20 }}>
