@@ -21,7 +21,6 @@ function DetailIndex() {
   const [film, setFilm] = useState<Film>(new Film());
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
-  console.log(id);
 
 
   useEffect(() => {

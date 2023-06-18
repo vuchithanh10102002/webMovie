@@ -32,6 +32,10 @@ function NavbarIndex() {
 
     const navigate = useNavigate();
 
+    const handleRedirect = (pathname: string = '') => {
+        navigate(`/genre/${pathname}`);
+    };
+
     useEffect(() => {
         const getGenres = async () => {
             try {
@@ -84,7 +88,8 @@ function NavbarIndex() {
                             <li className='genres-item'>
                                 <NavLink
                                     key={index}
-                                    to={`/genre/${route.genre}`}
+                                    to={`/genre/${route.pathname}`}
+                                    onClick={() => handleRedirect(route?.pathname)}
                                 >
                                     <span>{route.genre}</span>
                                 </NavLink>
@@ -105,6 +110,7 @@ function NavbarIndex() {
                 (
                     user.user ? (
                         <div className='loginTag'>
+                            <div className='login' onClick={() => { navigate('/information-account'); }}><p>My Account</p></div>
                             <div className='login' onClick={() => { navigate('/login'); localStorage.removeItem('token') }}><p>Logout</p></div>
                         </div>
                     ) : (

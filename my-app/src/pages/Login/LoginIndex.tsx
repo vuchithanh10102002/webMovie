@@ -32,16 +32,16 @@ function LoginIndex() {
         "username": username,
         "password": password
     }
-    
+
     const handleSubmit = async (e: any) => {
         if (username === "" || password === "") {
             setErrorMessage("Nhập thiếu thông tin! Vui lòng nhập lại!");
-            
+
         } else {
             e.preventDefault();
             const { response, error }: any = await userApi.signin(user);
             console.log(response);
-            
+
 
             if (response) {
                 dispatch(setUser(response));
@@ -53,13 +53,17 @@ function LoginIndex() {
         }
     };
 
-    
+
     const handleClickShowPassword = () => {
         setShowPassword((showPassword) => !showPassword);
     };
     return (
         <div
-            style={{ backgroundImage: `url('https://assets.nflxext.com/ffe/siteui/vlv3/73334647-ad51-42a9-b07b-93298cc2a8e1/a13fedda-da19-4b61-8063-5f715391b742/VN-vi-20230605-popsignuptwoweeks-perspective_alpha_website_large.jpg')` }}
+            style={{
+                backgroundImage: `url('https://assets.nflxext.com/ffe/siteui/vlv3/73334647-ad51-42a9-b07b-93298cc2a8e1/a13fedda-da19-4b61-8063-5f715391b742/VN-vi-20230605-popsignuptwoweeks-perspective_alpha_website_large.jpg')`,
+                overflow: 'hidden',
+                height: '100vh'
+            }}
         >
             <h1 style={{ margin: 0, padding: 20, color: 'red', cursor: 'pointer' }} onClick={() => navigate('/home')}>MyNetFlix</h1>
             <Grid

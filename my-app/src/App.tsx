@@ -6,6 +6,7 @@ import Layout from "./layout/Layout";
 import Login from "./pages/Login/LoginIndex";
 import Detail from "./pages/Detail/DetailIndex";
 import Register from "./pages/Register/RegisterIndex";
+import Genres from "./pages/Genres/GenresIndex";
 
 const App: React.FC = () => {
   return (
@@ -18,6 +19,7 @@ const App: React.FC = () => {
             <Route path="/home" element={<HomePageIndex />} />
             <Route path="/my-list" element={<MyList />} />
             <Route path="/detail/:id" element={<Detail />} />
+            <Route path="/genres/:pathname" element={<Genres />}/>
           </Route>
         </Routes>
       </Router>
