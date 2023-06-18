@@ -36,7 +36,8 @@ class commentController {
                 const newComment = yield new comment_1.default({
                     user: req.body.user,
                     comment: req.body.comment,
-                    rate: req.body.rate
+                    rate: req.body.rate,
+                    status: req.body.status
                 });
                 const comment = yield newComment.save();
                 return res.status(200).json(comment);

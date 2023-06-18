@@ -50,12 +50,15 @@ class filmController {
                     title: req.body.title,
                     overview: req.body.overview,
                     rate: req.body.rate,
-                    feature: req.body.feature,
+                    toprate: req.body.toprate,
+                    popular: req.body.popular,
+                    upcoming: req.body.popular,
                     realeaseDate: req.body.realeaseDate,
                     genres: req.body.genres,
                     background: req.body.background,
                     runtime: req.body.runtime,
-                    cast: req.body.cast
+                    cast: req.body.cast,
+                    status: req.body.status
                 });
                 const film = yield newFilm.save();
                 return res.status(200).json(film);
@@ -93,12 +96,15 @@ class filmController {
                     title: req.body.title,
                     overview: req.body.overview,
                     rate: req.body.rate,
-                    feature: req.body.feature,
+                    toprate: req.body.toprate,
+                    popular: req.body.popular,
+                    upcoming: req.body.popular,
                     realeaseDate: req.body.realeaseDate,
                     genres: req.body.genres,
                     background: req.body.background,
                     runtime: req.body.runtime,
-                    cast: req.body.cast
+                    cast: req.body.cast,
+                    status: req.body.status
                 };
                 yield film.updateOne(newFilm);
                 return res.status(200).json("Update film success");

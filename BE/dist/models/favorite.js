@@ -28,6 +28,10 @@ const favoriteSchema = new mongoose_1.Schema({
         type: Number,
         require: true,
     },
+    status: {
+        type: Number,
+        default: 1,
+    }
 }, {
     toObject: {
         virtuals: true,

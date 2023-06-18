@@ -1,11 +1,11 @@
 import mongoose, {Schema, model} from "mongoose";
 
 export interface ICast {
-    // id: number;
     name: string;
     birthdate: string;
     title: string;
     image: string;
+    status: number;
 }
 
 const castSchema = new Schema({
@@ -24,6 +24,10 @@ const castSchema = new Schema({
     image: {
         type: String,
         require: true
+    },
+    status: {
+        type: Number,
+        default: 1
     }
 },{ timestamps: true })
 

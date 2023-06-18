@@ -14,6 +14,7 @@ const genres_router_1 = __importDefault(require("./routers/genres.router"));
 const film_router_1 = __importDefault(require("./routers/film.router"));
 const cast_router_1 = __importDefault(require("./routers/cast.router"));
 const comment_router_1 = __importDefault(require("./routers/comment.router"));
+const video_router_1 = __importDefault(require("./routers/video.router"));
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
@@ -25,6 +26,7 @@ app.use("/v1/auth", genres_router_1.default);
 app.use("/v1/auth", film_router_1.default);
 app.use("/v1/auth", cast_router_1.default);
 app.use("/v1/auth", comment_router_1.default);
+app.use("/v1/auth", video_router_1.default);
 const port = process.env.PORT;
 const url = process.env.MONGODB_URL;
 mongoose_1.default

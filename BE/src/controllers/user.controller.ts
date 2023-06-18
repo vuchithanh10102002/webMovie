@@ -10,7 +10,8 @@ class authController  {
             const newUser: IUser = await new User({
                 username: req.body.username,
                 email: req.body.email,
-                password: req.body.password
+                password: req.body.password,
+                displayname: req.body.displayname
             })
             newUser.password = await newUser.encryptPassword(newUser.password)
             const user = await newUser.save();
@@ -35,16 +36,7 @@ class authController  {
                 }
 
                 const token: string = jwt.sign({_id: user._id}, process.env.JWT_ACCESS_KEY || 'token', {expiresIn:"24h"})
-                // const refreshToken = jwt.sign({_id: user._id}, process.env.JWT_ACCESS_KEY || 'token', {expiresIn:"24h"})
-                // refreshTokens.push(refreshToken)
-
-
-                // res.cookie("refreshToken", refreshToken, {
-                //     httpOnly: true,
-                //     secure: false,
-                //     path: "/",
-                //     sameSite: "strict"
-                // })
+                
                 return res.status(200).json({ user, token })
             }
             
@@ -54,42 +46,14 @@ class authController  {
         }
     }
 
-    static async requestRefreshToken(req: Request, res: Response) {
-        const refreshToken = req.cookies.refreshToken;
-        if (!refreshToken) return res.status(401).json("You're are not authenticated")
-        const jwtRefreshKey: any = process.env.JWT_REFRESH_KEY
-        
-        if (!refreshTokens.includes(refreshToken)) {
-            return res.status(403).json("Refresh token is not valid");
-        }
-        jwt.verify(refreshToken, jwtRefreshKey, (err: any, user: any) => {
-            if (err) {
-                console.log(err);
-            }
-
-            refreshTokens = refreshTokens.filter((token) => token !== refreshToken)
-
-            const newToken: string = jwt.sign({_id: user._id}, process.env.JWT_ACCESS_KEY || 'token', {expiresIn:"30s"})
-            const newRefreshToken = jwt.sign({_id: user._id}, process.env.JWT_ACCESS_KEY || 'token', {expiresIn:"30s"})
-            res.cookie("refreshToken", newRefreshToken, {
-                httpOnly: true,
-                secure: false,
-                path: "/",
-                sameSite: "strict"
-            })
-            return res.status(200).json({ newToken: newToken });
-        })
-    }
-
-    static async signout(req: Request, res: Response) {
-        res.clearCookie("refreshToken");
-        refreshTokens = refreshTokens.filter(token => token !== req.cookies.refreshToken);
-        return res.status(200).json("Logout!")
-    }
-
     static async profile(req: Request, res: Response) {
         try {
-            return res.send("proofile")
+            const userID = req.params.id;
+            const user = await User.findById(userID);
+
+            if (!user) return res.status(404).json("User not found");
+
+            return res.status(200).json(user);
         } catch(err) {
             return res.status(500).json(err)
         }

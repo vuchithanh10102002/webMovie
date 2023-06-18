@@ -6,19 +6,21 @@ export interface IFilm {
     title: string;
     overview: string;
     rate: number;
-    feature: string,
+    toprate: number;
+    popular: number;
+    upcoming: number;
     realeaseDate: string;
     genres: object;
     background: string;
     runtime: number;
     cast: object;
+    status: number;
 }
 
 const filmSchema = new  Schema({
     type: {
         type: String,
-        enum: ["movie", "tv"],
-        require: true
+        default: "movie"
     },
     imageUrl: {
         type: String,
@@ -36,10 +38,17 @@ const filmSchema = new  Schema({
         type: String,
         required: true,
     },
-    feature: {
-        type: String,
-        enum: ["Popular", "Upcomming", "TopRate"],
-        require: true
+    toprate: {
+        type: Number,
+        default: 0
+    },
+    popular: {
+        type: Number,
+        default: 0
+    },
+    upcoming: {
+        type: Number,
+        default: 0
     },
     realeaseDate: {
         type: String,
@@ -61,6 +70,10 @@ const filmSchema = new  Schema({
         type: Array,
         required: true,
     },
+    status: {
+        type: Number,
+        default: 1
+    }
 },
 {
     toObject: {

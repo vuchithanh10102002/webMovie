@@ -9,6 +9,7 @@ import routerGenres from "./routers/genres.router"
 import routerFilm from "./routers/film.router"
 import routerCast from "./routers/cast.router"
 import routerComment from "./routers/comment.router"
+import routerVideo from "./routers/video.router"
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use("/v1/auth", routerGenres)
 app.use("/v1/auth", routerFilm)
 app.use("/v1/auth", routerCast)
 app.use("/v1/auth", routerComment)
+app.use("/v1/auth", routerVideo)
 
 const port: any = process.env.PORT;
 const url: any =  process.env.MONGODB_URL;

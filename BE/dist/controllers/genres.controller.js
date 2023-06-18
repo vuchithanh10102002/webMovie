@@ -31,7 +31,8 @@ class genresController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const newGenre = yield new genres_1.default({
-                    genre: req.body.genre
+                    genre: req.body.genre,
+                    status: req.body.status
                 });
                 const genres = yield newGenre.save();
                 return res.status(200).json(genres);
@@ -61,12 +62,13 @@ class genresController {
             try {
                 const genreID = req.params.id;
                 const genre = yield genres_1.default.findById(genreID);
-                const newGenre = req.body.genre;
                 if (!genre)
                     return res.status(404).json("genre not found");
-                yield genre.updateOne({
-                    "genre": newGenre
-                });
+                const newGenre = {
+                    genre: req.body.genre,
+                    status: req.body.status
+                };
+                yield genre.updateOne(newGenre);
                 return res.status(200).json("Update favorite success");
             }
             catch (error) {

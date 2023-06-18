@@ -16,7 +16,9 @@ class genresController {
     static async addGenres(req: Request, res: Response) {
         try {
             const newGenre: IGenres = await new genresModel({
-                genre: req.body.genre
+                genre: req.body.genre,
+                pathname: req.params.pathname,
+                status: req.body.status
             });
 
             const genres = await newGenre.save();
@@ -46,13 +48,14 @@ class genresController {
         try {
             const genreID = req.params.id;
             const genre = await genresModel.findById(genreID);
-            const newGenre: IGenres = req.body.genre;
-
             if (!genre) return res.status(404).json("genre not found");
 
-            await genre.updateOne({
-                "genre": newGenre
-            });
+            const newGenre = {
+                genre: req.body.genre,
+                pathname: req.params.pathname,
+                status: req.body.status
+            };
+            await genre.updateOne(newGenre);
 
             return res.status(200).json("Update favorite success");
         } catch (error: any) {

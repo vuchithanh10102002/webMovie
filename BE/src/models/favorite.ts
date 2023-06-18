@@ -8,6 +8,7 @@ export interface IFavorite extends Document {
     title: string;
     poster: string;
     rate: number;
+    status: number;
 }
 
 
@@ -38,6 +39,10 @@ const favoriteSchema  = new Schema({
         type: Number,
         require: true,
     },
+    status: {
+        type: Number,
+        default: 1,
+    }
 }, {
     toObject: {
         virtuals: true,

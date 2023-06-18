@@ -3,6 +3,7 @@ import mongoose, {Schema, model, Document} from "mongoose";
 export interface IComment extends Document{
     comment: string;
     rate: number;
+    status: number;
 }
 
 const commentSchema = new Schema({
@@ -17,6 +18,10 @@ const commentSchema = new Schema({
     rate: {
         type: Number,
         required: true
+    },
+    status: {
+        type: Number,
+        default: 1
     }
 },{ timestamps: true })
 
