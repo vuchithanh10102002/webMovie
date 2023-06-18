@@ -22,7 +22,8 @@ class authController {
                 const newUser = yield new User_1.default({
                     username: req.body.username,
                     email: req.body.email,
-                    password: req.body.password
+                    password: req.body.password,
+                    displayname: req.body.displayname
                 });
                 newUser.password = yield newUser.encryptPassword(newUser.password);
                 const user = yield newUser.save();
@@ -47,14 +48,6 @@ class authController {
                         return res.status(404).json("Wrong password!");
                     }
                     const token = jsonwebtoken_1.default.sign({ _id: user._id }, process.env.JWT_ACCESS_KEY || 'token', { expiresIn: "24h" });
-                    // const refreshToken = jwt.sign({_id: user._id}, process.env.JWT_ACCESS_KEY || 'token', {expiresIn:"24h"})
-                    // refreshTokens.push(refreshToken)
-                    // res.cookie("refreshToken", refreshToken, {
-                    //     httpOnly: true,
-                    //     secure: false,
-                    //     path: "/",
-                    //     sameSite: "strict"
-                    // })
                     return res.status(200).json({ user, token });
                 }
             }
@@ -63,43 +56,14 @@ class authController {
             }
         });
     }
-    static requestRefreshToken(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const refreshToken = req.cookies.refreshToken;
-            if (!refreshToken)
-                return res.status(401).json("You're are not authenticated");
-            const jwtRefreshKey = process.env.JWT_REFRESH_KEY;
-            if (!refreshTokens.includes(refreshToken)) {
-                return res.status(403).json("Refresh token is not valid");
-            }
-            jsonwebtoken_1.default.verify(refreshToken, jwtRefreshKey, (err, user) => {
-                if (err) {
-                    console.log(err);
-                }
-                refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
-                const newToken = jsonwebtoken_1.default.sign({ _id: user._id }, process.env.JWT_ACCESS_KEY || 'token', { expiresIn: "30s" });
-                const newRefreshToken = jsonwebtoken_1.default.sign({ _id: user._id }, process.env.JWT_ACCESS_KEY || 'token', { expiresIn: "30s" });
-                res.cookie("refreshToken", newRefreshToken, {
-                    httpOnly: true,
-                    secure: false,
-                    path: "/",
-                    sameSite: "strict"
-                });
-                return res.status(200).json({ newToken: newToken });
-            });
-        });
-    }
-    static signout(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            res.clearCookie("refreshToken");
-            refreshTokens = refreshTokens.filter(token => token !== req.cookies.refreshToken);
-            return res.status(200).json("Logout!");
-        });
-    }
     static profile(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                return res.send("proofile");
+                const userID = req.params.id;
+                const user = yield User_1.default.findById(userID);
+                if (!user)
+                    return res.status(404).json("User not found");
+                return res.status(200).json(user);
             }
             catch (err) {
                 return res.status(500).json(err);

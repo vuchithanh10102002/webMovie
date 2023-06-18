@@ -13,6 +13,10 @@ const commentSchema = new mongoose_1.Schema({
     rate: {
         type: Number,
         required: true
+    },
+    status: {
+        type: Number,
+        default: 1
     }
 }, { timestamps: true });
 exports.default = (0, mongoose_1.model)("Comment", commentSchema);

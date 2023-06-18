@@ -37,11 +37,13 @@ class filmController {
                     rate: req.body.rate,
                     toprate: req.body.toprate,
                     popular: req.body.popular,
+                    upcoming: req.body.popular,
                     realeaseDate: req.body.realeaseDate,
                     genres: req.body.genres,
                     background: req.body.background,
                     runtime: req.body.runtime,
-                    cast: req.body.cast
+                    cast: req.body.cast,
+                    status: req.body.status
                 }
             )
 
@@ -84,11 +86,13 @@ class filmController {
                 rate: req.body.rate,
                 toprate: req.body.toprate,
                 popular: req.body.popular,
+                upcoming: req.body.popular,
                 realeaseDate: req.body.realeaseDate,
                 genres: req.body.genres,
                 background: req.body.background,
                 runtime: req.body.runtime,
-                cast: req.body.cast
+                cast: req.body.cast,
+                status: req.body.status
             }
 
             await film.updateOne(newFilm);

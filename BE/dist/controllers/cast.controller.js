@@ -48,7 +48,8 @@ class castController {
                     name: req.body.name,
                     birthdate: req.body.birthdate,
                     title: req.body.title,
-                    image: req.body.image
+                    image: req.body.image,
+                    status: req.body.status
                 });
                 const cast = yield newCast.save();
                 return res.status(200).json(cast);
@@ -84,7 +85,8 @@ class castController {
                     name: req.body.name,
                     birthdate: req.body.birthdate,
                     title: req.body.title,
-                    image: req.body.image
+                    image: req.body.image,
+                    status: req.body.status
                 };
                 yield (cast === null || cast === void 0 ? void 0 : cast.updateOne(newCast));
                 return res.status(200).json("Update cast success");

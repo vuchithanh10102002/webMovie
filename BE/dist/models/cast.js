@@ -17,6 +17,10 @@ const castSchema = new mongoose_1.Schema({
     image: {
         type: String,
         require: true
+    },
+    status: {
+        type: Number,
+        default: 1
     }
 }, { timestamps: true });
 exports.default = (0, mongoose_1.model)("Cast", castSchema);

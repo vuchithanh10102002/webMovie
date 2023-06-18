@@ -32,6 +32,10 @@ const userSchema = new mongoose_1.Schema({
         require: true,
         minLength: 8,
     },
+    displayname: {
+        type: String,
+        require: true,
+    },
 }, { timestamps: true });
 userSchema.methods.encryptPassword = (password) => __awaiter(void 0, void 0, void 0, function* () {
     const salt = yield bcrypt_1.default.genSalt(10);

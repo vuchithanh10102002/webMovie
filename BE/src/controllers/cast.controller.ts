@@ -33,7 +33,8 @@ class castController {
                 name: req.body.name,
                 birthdate: req.body.birthdate,
                 title: req.body.title,
-                image: req.body.image
+                image: req.body.image,
+                status: req.body.status
             })
 
             const cast = await newCast.save();
@@ -71,7 +72,8 @@ class castController {
                 name: req.body.name,
                 birthdate: req.body.birthdate,
                 title: req.body.title,
-                image: req.body.image
+                image: req.body.image,
+                status: req.body.status
             }
 
             await cast?.updateOne(newCast)

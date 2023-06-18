@@ -22,7 +22,8 @@ class commentController {
             const newComment = await new commentModel({
                 user: req.body.user,
                 comment: req.body.comment,
-                rate: req.body.rate
+                rate: req.body.rate,
+                status: req.body.status
             })
     
     

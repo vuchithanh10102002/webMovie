@@ -1,4 +1,4 @@
-import tokenMiddleware from "middleware/token.middleware";
+import tokenMiddleware from "../middleware/token.middleware";
 import GenresController from "../controllers/genres.controller";
 import express from "express";
 

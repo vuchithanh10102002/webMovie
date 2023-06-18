@@ -2,13 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
 const genresSchema = new mongoose_1.Schema({
-    // genreId: {
-    //     type: Schema.Types.ObjectId,
-    //     require: true
-    // },
     genre: {
         type: String,
         require: true
+    },
+    status: {
+        type: Number,
+        default: 1
     }
 }, {
     timestamps: true

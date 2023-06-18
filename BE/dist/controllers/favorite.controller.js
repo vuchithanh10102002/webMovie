@@ -41,7 +41,8 @@ class favoriteController {
                     idFilm: req.body.idFilm,
                     title: req.body.title,
                     poster: req.body.poster,
-                    rate: req.body.rate
+                    rate: req.body.rate,
+                    status: req.body.status
                 });
                 const favorite = yield newFavorite.save();
                 return res.status(201).json(favorite);

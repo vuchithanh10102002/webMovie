@@ -4,8 +4,7 @@ const mongoose_1 = require("mongoose");
 const filmSchema = new mongoose_1.Schema({
     type: {
         type: String,
-        enum: ["movie", "tv"],
-        require: true
+        default: "movie"
     },
     imageUrl: {
         type: String,
@@ -23,10 +22,17 @@ const filmSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
-    feature: {
-        type: String,
-        enum: ["Popular", "Upcomming", "TopRate"],
-        require: true
+    toprate: {
+        type: Number,
+        default: 0
+    },
+    popular: {
+        type: Number,
+        default: 0
+    },
+    upcoming: {
+        type: Number,
+        default: 0
     },
     realeaseDate: {
         type: String,
@@ -48,6 +54,10 @@ const filmSchema = new mongoose_1.Schema({
         type: Array,
         required: true,
     },
+    status: {
+        type: Number,
+        default: 1
+    }
 }, {
     toObject: {
         virtuals: true,

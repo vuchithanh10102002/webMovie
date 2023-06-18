@@ -1,19 +1,19 @@
 import { timeStamp } from "console";
 import mongoose, {Schema, model, Document} from "mongoose";
 
-export interface IGenres extends Document {
-    genreId: number;
+export interface IGenres extends Document{
     genre: string;
+    status: number;
 }
 
 const genresSchema = new Schema({
-    // genreId: {
-    //     type: Schema.Types.ObjectId,
-    //     require: true
-    // },
     genre: {
         type: String,
         require: true
+    },
+    status: {
+        type: Number,
+        default: 1
     }
 },{
     timestamps: true
