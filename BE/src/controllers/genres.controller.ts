@@ -17,6 +17,7 @@ class genresController {
         try {
             const newGenre: IGenres = await new genresModel({
                 genre: req.body.genre,
+                pathname: req.params.pathname,
                 status: req.body.status
             });
 
@@ -51,6 +52,7 @@ class genresController {
 
             const newGenre = {
                 genre: req.body.genre,
+                pathname: req.params.pathname,
                 status: req.body.status
             };
             await genre.updateOne(newGenre);
