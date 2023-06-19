@@ -20,11 +20,11 @@ import userApi from '../../api/userApi';
 import { setUser } from '../../redux/userSlice';
 
 function LoginIndex() {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
-    const [showPassword, setShowPassword] = useState(false);
-    const [showAlert, setShowAlert] = useState(false);
+    const [username, setUsername] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [errorMessage, setErrorMessage] = useState<string>("");
+    const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [showAlert, setShowAlert] = useState<boolean>(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 

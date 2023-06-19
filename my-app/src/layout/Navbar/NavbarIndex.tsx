@@ -25,15 +25,17 @@ export const LIST_ROUTE_COMPONENT: ItemRouter[] = [
 ];
 
 function NavbarIndex() {
-    const user = useSelector((state: any) => state.user);
     const [check, setCheck] = useState<boolean>(false);
     const [open, setOpen] = useState<boolean>(false);
     const [genres, setGenres] = useState<Array<Genres>>([]);
+    const [active, setActive] = useState<number>();
+    const user = useSelector((state: any) => state.user);
 
     const navigate = useNavigate();
 
-    const handleRedirect = (pathname: string = '') => {
-        navigate(`/genre/${pathname}`);
+    const handleRedirect = (genre: Genres = {}, index: number) => {
+        setActive(index);
+        navigate(`/genre/${genre?.pathname}`, { state: { genre } });
     };
 
     useEffect(() => {
@@ -49,8 +51,6 @@ function NavbarIndex() {
         }
         getGenres();
     }, [])
-
-    console.log(genres);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -74,29 +74,35 @@ function NavbarIndex() {
                 <div>
                     <h1 style={{ cursor: 'pointer' }} onClick={() => navigate('/home')}>MyNetFlix</h1>
                 </div>
-                {LIST_ROUTE_COMPONENT.map((route, index) => (
-                    <NavLink
-                        key={index}
-                        to={route.path}
-                    >
-                        <span>{route.title}</span>
-                    </NavLink>
-                ))}
+                <NavLink
+                    to="/home"
+                >
+                    <span>Home</span>
+                </NavLink>
                 <ul className='Genres'>Genres
                     <div className='ListGenres'>
                         {genres.map((route, index) => (
-                            <li className='genres-item'>
-                                <NavLink
-                                    key={index}
-                                    to={`/genre/${route.pathname}`}
-                                    onClick={() => handleRedirect(route?.pathname)}
+                            <li
+                                className={`genres-item ${active === index ? 'active' : ''}`}
+                                key={index}
+                                onClick={() => handleRedirect(route, index)}
+                            >
+                                <div
+
                                 >
-                                    <span>{route.genre}</span>
-                                </NavLink>
+                                    <span>{route?.genre}</span>
+                                </div>
                             </li>
                         ))}
                     </div>
                 </ul>
+                {user?.user &&
+                    <NavLink
+                        to='/my-list'
+                    >
+                        <span>My List</span>
+                    </NavLink>
+                }
 
             </div>
             <div className='right-bar'>

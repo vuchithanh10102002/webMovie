@@ -19,7 +19,7 @@ const App: React.FC = () => {
             <Route path="/home" element={<HomePageIndex />} />
             <Route path="/my-list" element={<MyList />} />
             <Route path="/detail/:id" element={<Detail />} />
-            <Route path="/genres/:pathname" element={<Genres />}/>
+            <Route path="/genre/:pathname" element={<Genres />}/>
           </Route>
         </Routes>
       </Router>

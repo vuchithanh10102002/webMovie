@@ -20,9 +20,9 @@ const userSlice = createSlice({
         state.listFavorites = action.payload;
         },
         removeFavorite: (state: any, action: any) => {
-        const { mediaId } = action.payload;
+        const { favoriteId } = action.payload;
         state.listFavorites = [...state.listFavorites].filter(
-            (e: any) => e.mediaId.toString() !== mediaId.toString()
+            (e: any) => e.favoriteId!== favoriteId
         );
         },
         addFavorite: (state: any, action: any) => {

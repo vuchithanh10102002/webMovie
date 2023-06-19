@@ -25,5 +25,18 @@
     flex-direction: column;
     padding: 0 50px;
     width: 1250px;
-
 }
+
+button.iconFavour:hover svg{
+    fill: red;
+}
+button.iconFavour:hover{
+    background-color: white;
+}
+button.isFavour{
+    background-color: white;
+}
+svg.isFavour{
+    fill: red;
+}
+
