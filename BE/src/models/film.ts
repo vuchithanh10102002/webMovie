@@ -10,7 +10,7 @@ export interface IFilm {
     popular: number;
     upcoming: number;
     realeaseDate: string;
-    genres: object;
+    genres: string;
     background: string;
     runtime: number;
     cast: object;
@@ -54,10 +54,10 @@ const filmSchema = new  Schema({
         type: String,
         required: true,
     },
-    genres: {
-        type: Array,
+    genres: [{
+        type: String,
         required: true,
-    },
+    }],
     background: {
         type: String,
         required: true,

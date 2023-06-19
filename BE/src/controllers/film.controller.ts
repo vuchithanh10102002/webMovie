@@ -1,5 +1,5 @@
 import {Request, Response, response} from "express"
-import filmModel, { IFilm } from "../models/film"
+import filmModel, { IFilm } from "../models/film";
 
 class filmController {
     static async getListFilms(req: Request, res: Response) {
@@ -19,6 +19,21 @@ class filmController {
             const film = await filmModel.findById(filmID);
 
             if(!film) return res.status(404).json("Film not found");
+
+            return res.status(200).json(film);
+        } catch (error: any) {
+            return res.status(500).json(error.message);
+        }
+    }
+
+    static async getFilmForGenres(req: Request, res: Response) {
+        try {
+            const genre = req.params.id;
+            const film = await filmModel.find({
+                genres: genre
+            })
+
+            if (!film) return res.status(404).json("Film not found");
 
             return res.status(200).json(film);
         } catch (error: any) {

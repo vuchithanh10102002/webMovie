@@ -41,6 +41,22 @@ class filmController {
             }
         });
     }
+    static getFilmForGenres(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const genre = req.params.id;
+                const film = yield film_1.default.find({
+                    genres: genre
+                });
+                if (!film)
+                    return res.status(404).json("Film not found");
+                return res.status(200).json(film);
+            }
+            catch (error) {
+                return res.status(500).json(error.message);
+            }
+        });
+    }
     static addFilm(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

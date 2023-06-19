@@ -32,6 +32,7 @@ class genresController {
             try {
                 const newGenre = yield new genres_1.default({
                     genre: req.body.genre,
+                    pathname: req.params.pathname,
                     status: req.body.status
                 });
                 const genres = yield newGenre.save();
@@ -66,6 +67,7 @@ class genresController {
                     return res.status(404).json("genre not found");
                 const newGenre = {
                     genre: req.body.genre,
+                    pathname: req.params.pathname,
                     status: req.body.status
                 };
                 yield genre.updateOne(newGenre);
