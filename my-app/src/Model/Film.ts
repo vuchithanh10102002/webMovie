@@ -23,7 +23,13 @@ export class Film{
     runtime?: number;
     spoken_languages?: Array<spokenLanguage>;
     status?: string;
-    tagline?: string;   
+    tagline?: string;
+    background?: string;  
+    imageUrl?: string;
+    rate?: string;
+    realeaseDate?: string;
+    cast?: Array<Cast>;
+    _id?: string;
 }
 
 class category {
@@ -41,5 +47,9 @@ class productionCompany {
 class spokenLanguage {
     english_name?: string;
     iso_639_1?: string;
+    name?: string;
+}
+class Cast {
+    id?: string;
     name?: string;
 }

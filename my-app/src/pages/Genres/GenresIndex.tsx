@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import './MyList.css';
+import './Genres.css';
 import { Film } from '../../Model/Film';
 import { getFilms } from './Service';
 import { useNavigate } from 'react-router-dom';
 
-function MyList() {
+function Genres() {
   const [films, setFilms] = useState<Array<Film>>([]);
   const navigate = useNavigate();
 
@@ -49,4 +49,4 @@ function MyList() {
   )
 }
 
-export default MyList
+export default Genres

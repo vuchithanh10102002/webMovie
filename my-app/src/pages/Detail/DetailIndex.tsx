@@ -14,10 +14,7 @@ import favoriteApi from '../../api/favoriteApi';
 import { addFavorite } from '../../redux/userSlice';
 
 const listIcon = [
-  <StorageIcon sx={{ color: 'white' }} />,
-  <FavoriteIcon sx={{ color: 'white' }}/>,
-  <BookmarkIcon sx={{ color: 'white' }} />,
-  <StarIcon sx={{ color: 'white' }} />
+  <FavoriteIcon sx={{ color: 'white' }} />,
 ]
 function DetailIndex() {
   const { id } = useParams();
@@ -25,18 +22,16 @@ function DetailIndex() {
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
 
+
   useEffect(() => {
     window.scrollTo(0, 0);
     const fetchData = async () => {
       if (id) {
-        const filmId = parseInt(id as string);
-        if (!isNaN(filmId)) {
-          try {
-            const data: any = await getDetail(filmId);
-            setFilm(data);
-          } catch (error) {
-            console.log('Error fetching film detail:', error);
-          }
+        try {
+          const data: any = await getDetail(id);
+          setFilm(data);
+        } catch (error) {
+          console.log('Error fetching film detail:', error);
         }
       }
     };
@@ -57,15 +52,14 @@ function DetailIndex() {
       mediaPoster: film.poster_path,
       mediaRate: film.vote_average
     }
-    console.log(body)
 
-    const { response, error } : any = await favoriteApi.add(body);
+    const { response, error }: any = await favoriteApi.add(body);
 
     if (error) {
       console.log(error);
     }
 
-    if(response) {
+    if (response) {
       dispatch(addFavorite(response));
 
     }
@@ -100,13 +94,13 @@ function DetailIndex() {
             <h1>{film?.title}</h1>
             <div className='actions'>
               {listIcon.map(icon => (
-                
+
                 <IconButton sx={{ backgroundColor: 'black', marginRight: 5 }} onClick={handleClickFavorites}>
                   {icon}
                 </IconButton>
               ))}
             </div>
-            <p><b>Release Date: </b> {film?.release_date}</p>
+            <p><b>Release Date: </b> {film?.realeaseDate}</p>
             <p><b>Running Time: </b> {getTime(film?.runtime)}</p>
             <p><b>Genre: </b> {film?.genres?.map((genre) => genre.name + ', ')}</p>
             <p><b>Overview:</b> {film?.overview}</p>

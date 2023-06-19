@@ -6,6 +6,8 @@ import './NavBar.css';
 import { IconButton } from '@mui/material';
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
+import { getAllGenres } from './Service';
+import { Genres } from '../../Model/Genres';
 interface ItemRouter {
     path: string;
     children?: ItemRouter[];
@@ -18,27 +20,38 @@ export const LIST_ROUTE_COMPONENT: ItemRouter[] = [
         path: '/home', title: 'Home'
     },
     {
-        path: '/series', title: 'Series'
-    },
-    {
-        path: '/films', title: 'Films'
-    },
-    {
-        path: '/new-and-popular', title: 'New & Popular'
-    },
-    {
         path: '/my-list', title: 'My List'
     },
-    {
-        path: '/browse-by-languages', title: 'Browse by Languages'
-    }
 ];
 
 function NavbarIndex() {
     const user = useSelector((state: any) => state.user);
     const [check, setCheck] = useState<boolean>(false);
     const [open, setOpen] = useState<boolean>(false);
+    const [genres, setGenres] = useState<Array<Genres>>([]);
+
     const navigate = useNavigate();
+
+    const handleRedirect = (pathname: string = '') => {
+        navigate(`/genre/${pathname}`);
+    };
+
+    useEffect(() => {
+        const getGenres = async () => {
+            try {
+                const response: any = await getAllGenres();
+                setGenres(response);
+
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
+        getGenres();
+    }, [])
+
+    console.log(genres);
+
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY >= 200) {
@@ -59,7 +72,7 @@ function NavbarIndex() {
         <div className={`navbar ${check ? 'active' : ''}`}>
             <div className='direct'>
                 <div>
-                    <h1>MyNetFlix</h1>
+                    <h1 style={{ cursor: 'pointer' }} onClick={() => navigate('/home')}>MyNetFlix</h1>
                 </div>
                 {LIST_ROUTE_COMPONENT.map((route, index) => (
                     <NavLink
@@ -69,6 +82,21 @@ function NavbarIndex() {
                         <span>{route.title}</span>
                     </NavLink>
                 ))}
+                <ul className='Genres'>Genres
+                    <div className='ListGenres'>
+                        {genres.map((route, index) => (
+                            <li className='genres-item'>
+                                <NavLink
+                                    key={index}
+                                    to={`/genre/${route.pathname}`}
+                                    onClick={() => handleRedirect(route?.pathname)}
+                                >
+                                    <span>{route.genre}</span>
+                                </NavLink>
+                            </li>
+                        ))}
+                    </div>
+                </ul>
 
             </div>
             <div className='right-bar'>
@@ -80,14 +108,15 @@ function NavbarIndex() {
 
             {open &&
                 (
-                    user ? (
+                    user.user ? (
                         <div className='loginTag'>
-                            <div className='login' onClick={() => { navigate('/login') }}><p>Logout</p></div>
+                            <div className='login' onClick={() => { navigate('/information-account'); }}><p>My Account</p></div>
+                            <div className='login' onClick={() => { navigate('/login'); localStorage.removeItem('token') }}><p>Logout</p></div>
                         </div>
                     ) : (
                         <div className='loginTag'>
                             <div className='login' onClick={() => navigate('/login')}><p>Login</p></div>
-                            <div className='login'><p>Register</p></div>
+                            <div className='login' onClick={() => navigate('/register')}><p>Register</p></div>
                         </div>
                     )
                 )

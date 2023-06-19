@@ -17,7 +17,44 @@
     color: white;
     padding: 10px 20px;
     margin: 10px;
+}
 
+.Genres{
+    text-decoration: none;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+}
+.Genres:hover .ListGenres{
+    display: block;
+}
+
+.ListGenres:hover .ListGenres{
+    display: block;
+}
+
+.genres-item:hover{
+    background-color: white;
+    color: black;
+}
+
+li.genres-item:hover a{
+    color: black;
+}
+
+.ListGenres{
+    display: none;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    top: 63px;
+    list-style: none;
+    position: absolute;
+}
+
+.ListGenres li{
+    padding: 10px 20px;
+    margin: 10px;
 }
 
 .navbar .direct {
