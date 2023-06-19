@@ -38,10 +38,10 @@ const filmSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
-    genres: {
-        type: Array,
-        required: true,
-    },
+    genres: [{
+            type: String,
+            required: true,
+        }],
     background: {
         type: String,
         required: true,

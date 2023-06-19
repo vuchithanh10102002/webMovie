@@ -12,5 +12,6 @@ router.post("/film", token_middleware_1.default.tokenAuth, film_controller_1.def
 router.delete("/film/:id", token_middleware_1.default.tokenAuth, film_controller_1.default.removeFilm);
 router.put("/film/:id", token_middleware_1.default.tokenAuth, film_controller_1.default.updateFilm);
 router.get("/film/:id", token_middleware_1.default.tokenAuth, film_controller_1.default.getDetail);
+router.get("/film/genres/:id", token_middleware_1.default.tokenAuth, film_controller_1.default.getFilmForGenres);
 exports.default = router;
 //# sourceMappingURL=film.router.js.map

@@ -6,6 +6,10 @@ const genresSchema = new mongoose_1.Schema({
         type: String,
         require: true
     },
+    pathname: {
+        type: String,
+        require: true
+    },
     status: {
         type: Number,
         default: 1
