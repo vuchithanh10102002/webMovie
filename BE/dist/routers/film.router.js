@@ -7,7 +7,7 @@ const token_middleware_1 = __importDefault(require("../middleware/token.middlewa
 const film_controller_1 = __importDefault(require("../controllers/film.controller"));
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
-router.get("/film", token_middleware_1.default.tokenAuth, film_controller_1.default.getListFilms);
+router.get("/film", film_controller_1.default.getListFilms);
 router.post("/film", token_middleware_1.default.tokenAuth, film_controller_1.default.addFilm);
 router.delete("/film/:id", token_middleware_1.default.tokenAuth, film_controller_1.default.removeFilm);
 router.put("/film/:id", token_middleware_1.default.tokenAuth, film_controller_1.default.updateFilm);
