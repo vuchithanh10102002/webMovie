@@ -43,14 +43,12 @@ function DetailIndex() {
     setOpen(false);
   };
   
-
-
   useEffect(() => {
     window.scrollTo(0, 0);
     const fetchData = async () => {
       if (id) {
         try {
-          const data: any = await getDetail(id);
+          const data: any = await getDetail(id);          
           setFilm(data);
         } catch (error) {
           console.log('Error fetching film detail:', error);
@@ -90,11 +88,8 @@ function DetailIndex() {
   }
 
   const handleRemoveFavorite = async (favoriteId?: string) => {
-    console.log(favoriteId);
     const { response, error }: any = await favoriteApi.remove({favoriteId});
     if (response) {
-      console.log(132);
-
       dispatch(removeFavorite(response));
     }
     else {
