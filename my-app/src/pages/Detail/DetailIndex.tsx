@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Film } from '../../Model/Film';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { getDetail } from './Service';
 import './Detail.css';
 import StorageIcon from '@mui/icons-material/Storage';
@@ -11,16 +11,38 @@ import StarIcon from '@mui/icons-material/Star';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import favoriteApi from '../../api/favoriteApi';
-import { addFavorite } from '../../redux/userSlice';
+import { addFavorite, removeFavorite } from '../../redux/userSlice';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 
-const listIcon = [
-  <FavoriteIcon sx={{ color: 'white' }} />,
-]
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
 function DetailIndex() {
   const { id } = useParams();
   const [film, setFilm] = useState<Film>(new Film());
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const filmFavor = user?.listFavorites?.some((item: any) => item?.idFilm === film?._id);
+  const filmFavorite = user?.listFavorites?.find((item: any) => item?.idFilm === film?._id);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  
 
 
   useEffect(() => {
@@ -35,33 +57,48 @@ function DetailIndex() {
         }
       }
     };
-
     fetchData();
   }, [id]);
 
   const handleClickFavorites = async () => {
-    if (!user) {
+    if (!user.user) {
+      setOpen(true);
       console.log("Please signin");
     }
 
-    const body = {
-      user: user.user.user._id,
-      mediaId: film.id,
-      mediaTitle: film.original_title,
-      mediaType: "movie",
-      mediaPoster: film.poster_path,
-      mediaRate: film.vote_average
+
+    else {
+      const body = {
+        user: user?.user.user?._id,
+        idFilm: film?._id,
+        title: film?.title,
+        type: "movie",
+        poster: film?.poster_path,
+        rate: film?.vote_average,
+        status: film?.status
+      }
+
+      const { response, error }: any = await favoriteApi.add(body);
+      if (response) {
+        dispatch(addFavorite(response));
+      }
+      else {
+        console.log(error);
+      }
     }
 
-    const { response, error }: any = await favoriteApi.add(body);
+  }
 
-    if (error) {
-      console.log(error);
-    }
-
+  const handleRemoveFavorite = async (favoriteId?: string) => {
+    console.log(favoriteId);
+    const { response, error }: any = await favoriteApi.remove({favoriteId});
     if (response) {
-      dispatch(addFavorite(response));
+      console.log(132);
 
+      dispatch(removeFavorite(response));
+    }
+    else {
+      console.log(error);
     }
   }
 
@@ -83,22 +120,36 @@ function DetailIndex() {
       <div style={{ height: '100vh', position: 'relative', color: 'white' }}>
         <div
           className='background-image'
-          style={{ backgroundImage: `url("https://image.tmdb.org/t/p/w1280${film?.backdrop_path}")` }}
+          style={{ backgroundImage: `url("${film?.background}")` }}
 
         />
         <div className='detailTag'>
           <div className="imgDetail">
-            <img src={`https://image.tmdb.org/t/p/w1280${film?.poster_path}`} alt="" />
+            <img src={`${film?.imageUrl}`} alt="" />
           </div>
           <div className='infoDetailTag'>
             <h1>{film?.title}</h1>
             <div className='actions'>
-              {listIcon.map(icon => (
-
-                <IconButton sx={{ backgroundColor: 'black', marginRight: 5 }} onClick={handleClickFavorites}>
-                  {icon}
-                </IconButton>
-              ))}
+              {
+                filmFavor ? <>
+                  <IconButton
+                    className='iconFavour isFavour'
+                    sx={{ backgroundColor: 'black', marginRight: 5 }}
+                    onClick={() => handleRemoveFavorite(filmFavorite?._id)}>
+                    <FavoriteIcon
+                      className={'isFavour'}
+                      sx={{ color: 'white' }} />
+                  </IconButton>
+                </> : <>
+                  <IconButton
+                    className='iconFavour'
+                    sx={{ backgroundColor: 'black', marginRight: 5 }}
+                    onClick={handleClickFavorites}>
+                    <FavoriteIcon  
+                      sx={{ color: 'white' }} />
+                  </IconButton>
+                </>
+              }
             </div>
             <p><b>Release Date: </b> {film?.realeaseDate}</p>
             <p><b>Running Time: </b> {getTime(film?.runtime)}</p>
@@ -109,6 +160,22 @@ function DetailIndex() {
 
         </div>
       </div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Please login first!
+          </Typography>
+          <div style={{ display: 'flex', justifyContent: 'space-around', paddingTop: 40 }}>
+            <Button onClick={() => navigate('/login')}>Login</Button>
+            <Button onClick={() => setOpen(false)}>Cancel</Button>
+          </div>
+        </Box>
+      </Modal>
     </div>
   )
 }

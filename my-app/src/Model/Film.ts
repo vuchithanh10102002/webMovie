@@ -30,6 +30,7 @@ export class Film{
     realeaseDate?: string;
     cast?: Array<Cast>;
     _id?: string;
+    idFilm?: string;
 }
 
 class category {

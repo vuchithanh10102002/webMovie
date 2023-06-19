@@ -1,30 +1,34 @@
 import privateClient from "./privateClient";
 
 const favoriteEnpoints = {
-  list: "favorites",
+  list: ({ userID }: any) => `favorites/${userID}`,
   add: "favorites",
   remove: ({ favoriteId }: any) => `favorites/${favoriteId}`,
+
 };
 
 const favoriteApi = {
-  getList: async () => {
+  getList: async ({ userID }: any) => {
     try {
-      const response = await privateClient.get(favoriteEnpoints.list);
+      const response = await privateClient.get(
+        favoriteEnpoints.list({ userID })
+      );
 
       return { response };
     } catch (err) {
       return { err };
     }
   },
-  add: async ({ user, mediaId, mediaType, mediaTitle, mediaPoster, mediaRate }: any) => {
+  add: async ({ user, type, idFilm, title, poster, rate, status }: any) => {
     try {
       const response = await privateClient.post(favoriteEnpoints.add, {
         user,
-        mediaId,
-        mediaType,
-        mediaTitle,
-        mediaPoster,
-        mediaRate,
+        type,
+        idFilm,
+        title,
+        poster,
+        rate,
+        status
       });
 
       return { response };

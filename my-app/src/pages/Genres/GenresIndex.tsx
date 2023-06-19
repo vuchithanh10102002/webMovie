@@ -2,11 +2,16 @@ import React, { useState, useEffect } from 'react';
 import './Genres.css';
 import { Film } from '../../Model/Film';
 import { getFilms } from './Service';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 function Genres() {
+  const { pathname } = useParams();
   const [films, setFilms] = useState<Array<Film>>([]);
   const navigate = useNavigate();
+  const location = useLocation();
+  const state = location.state;
+  console.log(state);
+
 
   useEffect(() => {
     const getAllFilms = async () => {
@@ -31,7 +36,7 @@ function Genres() {
 
   return (
     <div className='myList'>
-      <h1>My List Film</h1>
+      <h1>{state.genre.genre}</h1>
       <div className='myListFilm'>
         {films?.map((film, index) => (
           <div key={index} className='filmTag' onClick={() => handleData(film?.id)}>
