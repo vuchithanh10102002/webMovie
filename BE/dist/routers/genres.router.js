@@ -7,7 +7,7 @@ const token_middleware_1 = __importDefault(require("../middleware/token.middlewa
 const genres_controller_1 = __importDefault(require("../controllers/genres.controller"));
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
-router.get("/genres", token_middleware_1.default.tokenAuth, genres_controller_1.default.getListGenres);
+router.get("/genres", genres_controller_1.default.getListGenres);
 router.post("/genres", token_middleware_1.default.tokenAuth, genres_controller_1.default.addGenres);
 router.delete("/genres/:id", token_middleware_1.default.tokenAuth, genres_controller_1.default.removeGenres);
 router.put("/genres/:id", token_middleware_1.default.tokenAuth, genres_controller_1.default.updateGenres);

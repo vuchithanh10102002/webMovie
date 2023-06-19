@@ -4,7 +4,7 @@ import tokenMiddleware from "../middleware/token.middleware";
 
 const router = express.Router();
 
-router.get('/comment/:user', tokenMiddleware.tokenAuth ,commentController.getComments);
+router.get('/comment/:user',commentController.getComments);
 router.post("/comment", tokenMiddleware.tokenAuth , commentController.addComment);
 router.delete("/comment/:id", tokenMiddleware.tokenAuth , commentController.removeComment);
 
