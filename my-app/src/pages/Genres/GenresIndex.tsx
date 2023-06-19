@@ -10,15 +10,14 @@ function Genres() {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state;
-  console.log(state);
-
 
   useEffect(() => {
     const getAllFilms = async () => {
       try {
-        const response: any = await getFilms();
-        const films = response.results;
-        setFilms(films);
+        console.log(state?.genre?._id);
+        
+        const response: any = await getFilms(state?.genre?._id);
+        setFilms(response);        
 
       }
       catch (error) {
