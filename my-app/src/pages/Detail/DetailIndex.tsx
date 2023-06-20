@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Film } from '../../Model/Film';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getDetail } from './Service';
+import { getAllCasts, getAllGenres, getDetail } from './Service';
 import './Detail.css';
 import StorageIcon from '@mui/icons-material/Storage';
 import { IconButton } from '@mui/material';
@@ -16,6 +16,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { Genres } from '../../Model/Genres';
+import { Cast } from '../../Model/Cast';
 
 const style = {
   position: 'absolute',
@@ -35,21 +37,69 @@ function DetailIndex() {
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
   const [open, setOpen] = useState(false);
+  const [genres, setGenres] = useState<Array<Genres>>([]);
+  const [casts, setCasts] = useState<Array<Cast>>([]);
   const navigate = useNavigate();
   const filmFavor = user?.listFavorites?.some((item: any) => item?.idFilm === film?._id);
   const filmFavorite = user?.listFavorites?.find((item: any) => item?.idFilm === film?._id);
+  const [genresOfFilm, setGenresOfFilm] = useState<Array<Genres>>([]);
+  const [castsOfFilm, setCastsOfFilm] = useState<Array<Cast>>([]);
 
   const handleClose = () => {
     setOpen(false);
   };
-  
+
+
+
+  useEffect(() => {
+    const getGenres = async () => {
+      try {
+        const response: any = await getAllGenres();
+        setGenres(response);
+
+      }
+      catch (error) {
+        console.log(error);
+      }
+    }
+    getGenres();
+  }, [])
+
+  useEffect(() => {
+    const getCasts = async () => {
+      try {
+        const response: any = await getAllCasts();
+        setCasts(response);
+
+      }
+      catch (error) {
+        console.log(error);
+      }
+    }
+    getCasts();
+  }, [])
+
+
+
   useEffect(() => {
     window.scrollTo(0, 0);
     const fetchData = async () => {
       if (id) {
         try {
-          const data: any = await getDetail(id);          
+          const data: any = await getDetail(id);
           setFilm(data);
+          const genreNames = data.genres.map((obj: any) => {
+            const genreObj: any = genres.find((item: any) => item?._id === obj);
+            return genreObj
+          });
+          setGenresOfFilm(genreNames);
+
+          const castName = data.cast.map((obj: any) => {
+            const castObj: any = casts.find((item: any) => item?._id === obj);
+            return castObj;
+          });
+          setCastsOfFilm(castName);
+
         } catch (error) {
           console.log('Error fetching film detail:', error);
         }
@@ -88,7 +138,7 @@ function DetailIndex() {
   }
 
   const handleRemoveFavorite = async (favoriteId?: string) => {
-    const { response, error }: any = await favoriteApi.remove({favoriteId});
+    const { response, error }: any = await favoriteApi.remove({ favoriteId });
     if (response) {
       dispatch(removeFavorite(response));
     }
@@ -96,8 +146,6 @@ function DetailIndex() {
       console.log(error);
     }
   }
-
-
 
   const getTime = (time: number = 0) => {
     var Hours = Math.floor(time / 60)
@@ -140,7 +188,7 @@ function DetailIndex() {
                     className='iconFavour'
                     sx={{ backgroundColor: 'black', marginRight: 5 }}
                     onClick={handleClickFavorites}>
-                    <FavoriteIcon  
+                    <FavoriteIcon
                       sx={{ color: 'white' }} />
                   </IconButton>
                 </>
@@ -148,11 +196,25 @@ function DetailIndex() {
             </div>
             <p><b>Release Date: </b> {film?.realeaseDate}</p>
             <p><b>Running Time: </b> {getTime(film?.runtime)}</p>
-            <p><b>Genre: </b> {film?.genres?.map((genre) => genre.name + ', ')}</p>
+            <p><b>Genre: </b> {genresOfFilm?.map((genre) => genre?.genre + ', ')}</p>
             <p><b>Overview:</b> {film?.overview}</p>
             <p><b>Rating:</b> {getRound(film?.vote_average)} <StarIcon sx={{ color: 'white', fontSize: 15 }} /></p>
           </div>
+        </div>
+        <h1 style={{ color: 'black', padding: '0 100px' }}>Casts: </h1>
+        <div className='casts'>
+          {castsOfFilm?.map(cast => (
+            <div className='cast-tag'>
+              <div className='avatar-cast'>
+                {cast?.image ? <>
+                  <img src={`${cast?.image}`} alt="" />
+                </> : <>
 
+                </>}
+              </div>
+              <h4>{cast?.name}</h4>
+            </div>
+          ))}
         </div>
       </div>
       <Modal
