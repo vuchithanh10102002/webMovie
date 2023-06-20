@@ -3,6 +3,7 @@ import './Genres.css';
 import { Film } from '../../Model/Film';
 import { getFilms } from './Service';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import genreApi from '../../api/genreApi'
 
 function Genres() {
   const { pathname } = useParams();
@@ -10,24 +11,21 @@ function Genres() {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state;
-  console.log(state);
-
 
   useEffect(() => {
-    const getAllFilms = async () => {
-      try {
-        const response: any = await getFilms();
-        const films = response.results;
-        setFilms(films);
-
+    const getListByGenre = async (genre?: string) => {
+      const { response, error }: any = await genreApi.getList({ genreID: genre });
+      if (response) {
+        setFilms(response)
       }
-      catch (error) {
-        console.log('Error fetching popular films:', error);
+      else {
+        console.log(error);
       }
-    };
+    }
+    getListByGenre(state?.genre?._id);
 
-    getAllFilms();
-  }, [])
+  }, [state?.genre?._id])
+
 
   const handleData = (id: number) => {
     navigate(`/detail/${id}`);
