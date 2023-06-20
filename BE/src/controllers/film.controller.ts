@@ -58,7 +58,6 @@ class filmController {
                     background: req.body.background,
                     runtime: req.body.runtime,
                     cast: req.body.cast,
-                    comments: req.body.comments,
                     status: req.body.status
                 }
             )
@@ -108,7 +107,6 @@ class filmController {
                 background: req.body.background,
                 runtime: req.body.runtime,
                 cast: req.body.cast,
-                comments: req.body.comments,
                 status: req.body.status
             }
 

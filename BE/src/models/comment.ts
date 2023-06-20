@@ -1,6 +1,7 @@
 import mongoose, {Schema, model, Document} from "mongoose";
 
 export interface IComment extends Document{
+    idFilm: string;
     comment: string;
     rate: number;
     status: number;
@@ -10,6 +11,10 @@ const commentSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
         required: true
+    },
+    idFilm: {
+        type: String,
+        require: true
     },
     comment: {
         type: String,

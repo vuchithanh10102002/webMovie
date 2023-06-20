@@ -50,10 +50,10 @@ const filmSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
-    cast: {
-        type: Array,
-        required: true,
-    },
+    cast: [{
+            type: String,
+            required: true,
+        }],
     status: {
         type: Number,
         default: 1

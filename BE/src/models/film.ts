@@ -14,7 +14,6 @@ export interface IFilm {
     background: string;
     runtime: number;
     cast: string;
-    comments: string;
     status: number;
 }
 
@@ -70,10 +69,6 @@ const filmSchema = new  Schema({
     cast: [{
         type: String,
         required: true,
-    }],
-    comments: [{
-        type: String,
-        default: ""
     }],
     status: {
         type: Number,

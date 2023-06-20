@@ -8,6 +8,7 @@ const comment_controller_1 = __importDefault(require("../controllers/comment.con
 const token_middleware_1 = __importDefault(require("../middleware/token.middleware"));
 const router = express_1.default.Router();
 router.get('/comment/:user', comment_controller_1.default.getComments);
+router.get('/comment/film/:id', comment_controller_1.default.getAllComments);
 router.post("/comment", token_middleware_1.default.tokenAuth, comment_controller_1.default.addComment);
 router.delete("/comment/:id", token_middleware_1.default.tokenAuth, comment_controller_1.default.removeComment);
 exports.default = router;

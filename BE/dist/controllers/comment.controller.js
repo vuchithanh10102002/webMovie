@@ -30,11 +30,28 @@ class commentController {
             }
         });
     }
+    static getAllComments(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const idFilm = req.params.id;
+                const comments = yield comment_1.default.find({
+                    idFilm: idFilm
+                });
+                if (!comments)
+                    return res.status(404).json("Not found");
+                return res.status(200).json(comments);
+            }
+            catch (err) {
+                return res.status(500).json(err.message);
+            }
+        });
+    }
     static addComment(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const newComment = yield new comment_1.default({
                     user: req.body.user,
+                    idFilm: req.body.idFilm,
                     comment: req.body.comment,
                     rate: req.body.rate,
                     status: req.body.status

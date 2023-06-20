@@ -17,10 +17,28 @@ class commentController {
         }
     }
 
+    static async getAllComments(req: Request, res: Response) {
+        try {
+            const idFilm = req.params.id;
+            const comments = await commentModel.find({
+                idFilm: idFilm
+            });
+
+            if(!comments) return res.status(404).json("Not found");
+
+            return res.status(200).json(comments);
+
+
+        } catch (err: any) {
+            return res.status(500).json(err.message);
+        }
+    }
+
     static async addComment(req: Request, res: Response) {
         try {
             const newComment = await new commentModel({
                 user: req.body.user,
+                idFilm: req.body.idFilm,
                 comment: req.body.comment,
                 rate: req.body.rate,
                 status: req.body.status
