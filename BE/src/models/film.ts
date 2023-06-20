@@ -13,7 +13,8 @@ export interface IFilm {
     genres: string;
     background: string;
     runtime: number;
-    cast: object;
+    cast: string;
+    comments: string;
     status: number;
 }
 
@@ -66,10 +67,14 @@ const filmSchema = new  Schema({
         type: String,
         required: true,
     },
-    cast: {
-        type: Array,
+    cast: [{
+        type: String,
         required: true,
-    },
+    }],
+    comments: [{
+        type: String,
+        default: ""
+    }],
     status: {
         type: Number,
         default: 1
